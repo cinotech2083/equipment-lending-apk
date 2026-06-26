@@ -5,7 +5,7 @@ package.domain = hk.serena
 source.dir = .
 source.include_exts = py,png,jpg,kv,atlas,md
 version = 0.1
-requirements = hostpython3==3.10.11,python3==3.10.11,kivy==2.3.0,kivymd
+requirements = python3,kivy==2.3.0,kivymd
 orientation = portrait
 fullscreen = 0
 android.permissions = INTERNET,NFC
