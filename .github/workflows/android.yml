@@ -5,9 +5,6 @@ on:
   push:
     branches: [ "main" ]
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build-apk:
     runs-on: ubuntu-22.04
@@ -35,16 +32,16 @@ jobs:
             zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake \
             libffi-dev libssl-dev automake lld
 
+      - name: Install Python tools
+        run: |
+          python -m pip install --upgrade "pip<24.1"
+          python -m pip install "Cython<3" "buildozer==1.5.0"
+
       - name: Show tool versions
         run: |
           python --version
           pip --version
           java -version
-
-      - name: Install Buildozer
-        run: |
-          python -m pip install --upgrade pip setuptools wheel
-          pip install "cython<3" "buildozer==1.5.0"
 
       - name: Clean old build cache
         run: |
