@@ -5,6 +5,9 @@ on:
   push:
     branches: [ "main" ]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build-apk:
     runs-on: ubuntu-22.04
@@ -30,7 +33,13 @@ jobs:
           sudo apt install -y \
             git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config \
             zlib1g-dev libncurses5-dev libncursesw5-dev libtinfo5 cmake \
-            libffi-dev libssl-dev
+            libffi-dev libssl-dev automake lld
+
+      - name: Show tool versions
+        run: |
+          python --version
+          pip --version
+          java -version
 
       - name: Install Buildozer
         run: |
