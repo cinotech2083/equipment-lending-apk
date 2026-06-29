@@ -6,9 +6,6 @@ on:
     branches:
       - main
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   build-apk:
     runs-on: ubuntu-22.04
@@ -16,6 +13,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Checkout python-for-android
+        uses: actions/checkout@v4
+        with:
+          repository: kivy/python-for-android
+          ref: 2024.01.21
+          path: python-for-android
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -36,12 +40,6 @@ jobs:
             zlib1g-dev libncurses5-dev libncursesw5-dev cmake \
             libffi-dev libssl-dev automake openjdk-17-jdk
 
-      - name: Show versions
-        run: |
-          python --version
-          pip --version
-          java -version
-
       - name: Install build tools
         run: |
           python -m pip install --upgrade "pip<24.1"
@@ -53,6 +51,12 @@ jobs:
           rm -rf .buildozer
           rm -rf bin
           rm -rf ~/.buildozer
+
+      - name: Verify p4a checkout
+        run: |
+          test -f python-for-android/setup.py
+          git -C python-for-android rev-parse --abbrev-ref HEAD || true
+          git -C python-for-android rev-parse HEAD
 
       - name: Build APK
         run: |
