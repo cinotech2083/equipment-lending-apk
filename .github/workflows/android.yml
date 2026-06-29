@@ -11,14 +11,14 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Checkout
+      - name: Checkout app repo
         uses: actions/checkout@v4
 
       - name: Checkout python-for-android
         uses: actions/checkout@v4
         with:
           repository: kivy/python-for-android
-          ref: 2024.01.21
+          ref: v2024.01.21
           path: python-for-android
 
       - name: Set up Python
@@ -55,7 +55,7 @@ jobs:
       - name: Verify p4a checkout
         run: |
           test -f python-for-android/setup.py
-          git -C python-for-android rev-parse --abbrev-ref HEAD || true
+          git -C python-for-android describe --tags --always
           git -C python-for-android rev-parse HEAD
 
       - name: Build APK
